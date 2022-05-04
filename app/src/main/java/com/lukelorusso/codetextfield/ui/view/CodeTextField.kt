@@ -101,11 +101,7 @@ fun CodeTextField(
     onTextChanged: (String, Boolean) -> Unit = { _, _ -> } // { code, isCompleted -> }
 ) {
     val editTextReference = remember { mutableStateOf<EditText?>(null) }
-    val text = remember(
-        initialText
-            .toMutableList()
-            ::toMutableStateList
-    )
+    val text = remember(initialText.toMutableList()::toMutableStateList)
     val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
@@ -185,19 +181,19 @@ private fun XmlView(
         ),
     factory = CodeTextFieldEditTextBinding::inflate,
 ) {
-    if (editTextReal != editTextReference.value) {
-        editTextReal.apply {
-            setInputType(inputType)
-            setText(initialText)
-            isEnabled = enabled
-            filters = arrayOf(InputFilter.LengthFilter(maxLength))
-            addTextChangedListener(textWatcher)
-            onFocusChangeListener = View.OnFocusChangeListener { _, isItFocused ->
-                isEditTextFocused.value = isItFocused
-            }
+    editTextReal.apply {
+        setInputType(inputType)
+        setText(initialText)
+        isEnabled = enabled
+        filters = arrayOf(InputFilter.LengthFilter(maxLength))
+        onFocusChangeListener = View.OnFocusChangeListener { _, isItFocused ->
+            isEditTextFocused.value = isItFocused
         }
-        editTextReference.value?.removeTextChangedListener(textWatcher)
-        editTextReference.value = editTextReal
+        if (this != editTextReference.value) {
+            editTextReference.value?.removeTextChangedListener(textWatcher)
+            editTextReference.value = this
+            addTextChangedListener(textWatcher)
+        }
     }
 }
 
