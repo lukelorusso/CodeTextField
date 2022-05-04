@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editTextReal"
+    android:layout_width="1dp"
+    android:layout_height="1dp"
+    android:background="@null"
+    android:cursorVisible="false"
+    android:inputType="number"
+    android:textSize="0sp"
+    tools:ignore="Autofill,LabelFor,ResourceName,TextFields" />
