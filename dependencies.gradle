@@ -1,0 +1,31 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+ext {
+
+    // APP VERSION
+    androidVersionCode             = 1
+    androidVersionName             = '1.0.0' // REMEMBER: also update README.md
+    androidNamespace               = 'com.lukelorusso.codetextfield'
+
+    // ANDROID VERSION
+    androidMinSdkVersion           = 21
+    androidTargetSdkVersion        = 33
+
+    // COMMON VERSION
+    androidxActivityComposeVersion = '1.7.2'
+    androidxCoreVersion            = '1.10.1'
+
+    // DEPENDENCY CHECK STRATEGY
+    isNonStable                    = { String version ->
+        def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { version.toUpperCase().contains(it) }
+        def regex = /^[0-9,.v-]+(-r)?$/
+        return !stableKeyword && !(version ==~ regex)
+    }
+
+}
