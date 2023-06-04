@@ -1,25 +1,21 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.android'
     id 'com.github.ben-manes.versions'
 }
 
+group='com.github.lukelorusso'
+
 android {
+    namespace androidNamespace
     compileSdk androidTargetSdkVersion
 
     defaultConfig {
-        applicationId "com.lukelorusso.codetextfield"
         minSdk androidMinSdkVersion
         targetSdk androidTargetSdkVersion
-        versionCode androidVersionCode
-        versionName androidVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
     }
 
     buildTypes {
@@ -28,35 +24,37 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = '17'
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
     }
+
     buildFeatures {
         viewBinding true
         compose true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    namespace 'com.lukelorusso.codetextfield'
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation "androidx.core:core-ktx:$androidxCoreVersion"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.7.2'
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     // DEPENDENCY CHECK STRATEGY
