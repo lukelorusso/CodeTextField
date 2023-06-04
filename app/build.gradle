@@ -3,17 +3,18 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.android'
+    id 'com.github.ben-manes.versions'
 }
 
 android {
-    compileSdk 31
+    compileSdk androidTargetSdkVersion
 
     defaultConfig {
         applicationId "com.lukelorusso.codetextfield"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk androidMinSdkVersion
+        targetSdk androidTargetSdkVersion
+        versionCode androidVersionCode
+        versionName androidVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -28,12 +29,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        jvmTarget = '17'
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         viewBinding true
@@ -47,17 +48,21 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.lukelorusso.codetextfield'
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.4.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    implementation 'androidx.activity:activity-compose:1.7.2'
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    // DEPENDENCY CHECK STRATEGY
+    tasks.named("dependencyUpdates").configure {
+        rejectVersionIf {
+            isNonStable(it.candidate.version)
+        }
+    }
 }

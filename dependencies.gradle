@@ -1,0 +1,26 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+ext {
+
+    // APP VERSION
+    androidVersionCode          = 1
+    androidVersionName          = '1.0.0' // REMEMBER: also update README.md
+
+    // ANDROID VERSION
+    androidMinSdkVersion        = 21
+    androidTargetSdkVersion     = 33
+
+    // DEPENDENCY CHECK STRATEGY
+    isNonStable                 = { String version ->
+        def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { version.toUpperCase().contains(it) }
+        def regex = /^[0-9,.v-]+(-r)?$/
+        return !stableKeyword && !(version ==~ regex)
+    }
+
+}
