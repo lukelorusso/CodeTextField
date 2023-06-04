@@ -62,8 +62,6 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidxCoreVersion"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     // DEPENDENCY CHECK STRATEGY
     tasks.named("dependencyUpdates").configure {
